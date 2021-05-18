@@ -1,0 +1,8 @@
+#
+# pattern:
+# files/directory   user
+#
+#
+*.cs  @khanasif1
+
+*.md  @ohteam9
