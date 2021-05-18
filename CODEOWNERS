@@ -1,7 +1,7 @@
 #
 # pattern:
 # files/directory   user
-#
+# assign
 #
 *.cs  @khanasif1
 
