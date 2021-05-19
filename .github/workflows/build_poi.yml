@@ -1,12 +1,8 @@
 name: .NET Core Build with Tests
 
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Person to greet'
-        required: true
-        default: 'Asif Khan'
+  pull_request:
+    types: [closed]
   #push:
   #  branches: [ main ]
 
@@ -47,3 +43,12 @@ jobs:
       run: |
         dotnet publish -c Release -o poi
       working-directory: apis/poi/web 
+      
+    - uses: nashmaniac/create-issue-action@v1.1
+      name: Create Issue Action
+      with:
+        title: Build Failed
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: Workflow failed for commit ${{github.sha}}      
