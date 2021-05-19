@@ -30,7 +30,7 @@ jobs:
       
     - name: Build
       run: dotnet build --no-restore
-      working-directory: apis/poi/web
+      working-directory: apis/poi/we
       
     - name: Test
       run: dotnet test --no-restore --no-build --verbosity normal --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
