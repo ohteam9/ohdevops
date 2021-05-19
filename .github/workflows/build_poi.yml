@@ -30,11 +30,6 @@ jobs:
       run: dotnet build --no-restore
       working-directory: apis/poi/web
       
-    - name: set pr build number (if pr)
-      id: PRNUMBER
-      if: ${{ github.event_name == 'pull_request' }}
-      uses: actions/pr-number-action@v1.3
-      
     - name: Test
       run: dotnet test --no-restore --no-build --verbosity normal --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
       working-directory: apis/poi/tests/UnitTests
