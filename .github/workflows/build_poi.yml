@@ -1,11 +1,17 @@
 name: .NET Core Build with Tests
 
 on:
-  pull_request:
-    types: [closed]
+  #pull_request:
+    #types: [closed]
   #push:
-  #  branches: [ main ]
-
+    #branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Asif Khan'
+        
 jobs:
   build:
 
