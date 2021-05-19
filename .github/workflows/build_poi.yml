@@ -18,9 +18,12 @@ jobs:
     
     - name: Restore dependencies
       run: dotnet restore
-    
+      working-directory: apis/poi/web
+      
     - name: Build
       run: dotnet build --no-restore
+      working-directory: apis/poi/web
+      
     - name: set pr build number (if pr)
       id: PRNUMBER
       if: ${{ github.event_name == 'pull_request' }}
@@ -28,6 +31,8 @@ jobs:
       
     - name: Test
       run: dotnet test --no-restore --no-build --verbosity normal --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
+      working-directory: apis/poi/tests/UnitTests
+      
       
       # upload report as build artifact
     - name: Upload a Build Artifact
@@ -36,3 +41,8 @@ jobs:
       with:
         name: 'Test Run'
         path: ${{github.workspace}}/${{env.file_name}}
+        
+    - name: dotnet publish
+      run: |
+        dotnet publish -c Release -o poi
+      working-directory: apis/poi/web 
