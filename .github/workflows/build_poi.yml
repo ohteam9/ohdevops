@@ -1,8 +1,14 @@
 name: .NET Core Build with Tests
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Asif Khan'
+  #push:
+  #  branches: [ main ]
 
 jobs:
   build:
