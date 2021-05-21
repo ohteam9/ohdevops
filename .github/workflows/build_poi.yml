@@ -1,0 +1,65 @@
+name: .NET Core Build with Tests
+
+on:
+  #pull_request:
+    #types: [closed]
+  push:
+    branches:
+     - main
+    paths:
+     - apis/poi/**
+    
+  #workflow_dispatch:
+    #inputs:
+      #name:
+        #description: 'Person to greet'
+        #required: true
+        #default: 'Asif Khan'
+        
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: apis/poi/web
+      
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: apis/poi/web
+      
+    - name: Test
+      run: dotnet test --no-restore --no-build --verbosity normal --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};"
+      working-directory: apis/poi/tests/UnitTests
+      
+      
+      # upload report as build artifact
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{always()}}
+      with:
+        name: 'Test Run'
+        path: ${{github.workspace}}/${{env.file_name}}
+        
+    - name: dotnet publish
+      run: |
+        dotnet publish -c Release -o poi
+      working-directory: apis/poi/web 
+      
+    - uses: nashmaniac/create-issue-action@v1.1
+      if: ${{ failure() }} # only run when this job is failed.
+      name: Create Issue Action
+      with:
+        title: Build Failed
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
+        labels: worflow-failed
+        body: Workflow failed for commit ${{github.sha}} Asif Khan     
