@@ -3,6 +3,9 @@ on:
   push:
     paths:
       - 'apis/poi/**'
+defaults:
+  run:
+    working-directory: apis/poi/web      
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
@@ -23,7 +26,7 @@ jobs:
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
         - run: |
-            cd /home/runner/work/ohdevops/ohdevops/api/poi/web/
+            echo    ls        
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }} -f Dockerfile
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sampleapp:${{ github.sha }}
             
