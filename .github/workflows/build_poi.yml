@@ -7,7 +7,7 @@ on:
     branches:
      - main
     paths:
-     - apis/poi/**
+     - ohdevops/apis/poi/**
     
   #workflow_dispatch:
     #inputs:
