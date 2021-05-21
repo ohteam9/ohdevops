@@ -6,8 +6,6 @@ on:
   push:
     branches:
      - main
-    paths:
-     - "ohdevops/apis/poi/**"
     
   #workflow_dispatch:
     #inputs:
