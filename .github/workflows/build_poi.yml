@@ -5,7 +5,7 @@ on:
     #types: [closed]
   push:
     paths:
-      - '**'
+      - 'ohdevops/apis/poi/**'
     
   #workflow_dispatch:
     #inputs:
