@@ -5,7 +5,7 @@ on:
     #types: [closed]
   push:
     paths:
-      - 'apis/poi/**'
+      - 'apis/po/**'
     
   #workflow_dispatch:
     #inputs:
